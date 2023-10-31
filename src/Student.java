@@ -1,10 +1,11 @@
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Student extends People {
     private String major;
     private double tuition;
     private Date admittedDate;
-    private Course[] courses;
+    private ArrayList<Course> courses;
 
     public Student() {
         major = "";
@@ -13,20 +14,8 @@ public class Student extends People {
         courses = null;
     }
 
-    public Student(People person, String major, double tuition, Date admittedDate, Course[] courses) {
-        super(person);
-        this.major = major;
-        this.tuition = tuition;
-        this.admittedDate = admittedDate;
-        this.courses = courses;
-    }
-
-    public Student(String name, String ID, String email, String address, int phoneNum, String major, double tuition, Date admittedDate, Course[] courses) {
-        super(name, ID, email, address, phoneNum);
-        this.major = major;
-        this.tuition = tuition;
-        this.admittedDate = admittedDate;
-        this.courses = courses;
+    public Student(String name, String ID) {
+        super(name, ID);
     }
 
     public String getMajor() {
@@ -53,21 +42,30 @@ public class Student extends People {
         this.admittedDate = admittedDate;
     }
 
-    public Course[] getCourses() {
+    public ArrayList<Course> getCourses() {
         return courses;
     }
 
-    public void setCourses(Course[] courses) {
+    public void setCourses(ArrayList<Course> courses) {
         this.courses = courses;
     }
 
     @Override
     public void Payment() {
-
+        //calculate tuition from price of list of courses - price per credit
+        tuition = 0.0;
+        for (Course c : courses) {
+            tuition += c.getNumOfCredits() * c.getPrice();
+        }
     }
 
     @Override
-    public void Display() {
-
+    public String Display() {
+        return String.format("%s\n" +
+                        "%s\n" +
+                        "%s\n" +
+                        "%s\n" +
+                        "Major: %s\n",
+                getName(), getID(), getEmail(), getAddress(), major);
     }
 }

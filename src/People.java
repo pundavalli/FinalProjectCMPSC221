@@ -1,10 +1,18 @@
 public abstract class People implements Payable {
-    private String name, ID, email, address;
+    private String name, ID;
+    private Email email;
+    private Address address;
     private int phoneNum;
 
     public People() {
+        name = "";
+        ID = "";
+        email = null;
+        address = null;
+        phoneNum = 0;
     }
 
+    // Copy constructor
     public People(People other) {
         this.name = other.name;
         this.ID = other.ID;
@@ -13,15 +21,12 @@ public abstract class People implements Payable {
         this.phoneNum = other.phoneNum;
     }
 
-    public People(String name, String ID, String email, String address, int phoneNum) {
+    public People(String name, String ID) {
         this.name = name;
         this.ID = ID;
-        this.email = email;
-        this.address = address;
-        this.phoneNum = phoneNum;
     }
 
-    public abstract void Display();
+    public abstract String Display();
 
     public String getName() {
         return name;
@@ -39,19 +44,19 @@ public abstract class People implements Payable {
         this.ID = ID;
     }
 
-    public String getEmail() {
+    public Email getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(Email email) {
         this.email = email;
     }
 
-    public String getAddress() {
+    public Address getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 

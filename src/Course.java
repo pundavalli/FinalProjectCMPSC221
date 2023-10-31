@@ -15,8 +15,12 @@ public class Course {
         this.price = price;
     }
 
-    public void Display() {
-
+    @Override
+    public String toString() {
+        return String.format("%s\n" +
+                        "%d credits" +
+                        "$%.2f",
+                courseName, numOfCredits, numOfCredits * price);
     }
 
     public String getCourseName() {
