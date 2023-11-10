@@ -1,5 +1,5 @@
 public class Email {
-    String user_name, domain_name;
+    private String user_name, domain_name;
 
     public Email(String user_name, String domain_name) {
         this.user_name = user_name;
@@ -7,6 +7,22 @@ public class Email {
         if (!(domain_name.contains(".com") && domain_name.contains(".net") && domain_name.contains(".fr") && domain_name.contains(".co.uk") && domain_name.contains(".gov"))) {
             throw new IllegalArgumentException("Not a proper domain name");
         }
+    }
+
+    public String getUser_name() {
+        return user_name;
+    }
+
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
+    }
+
+    public String getDomain_name() {
+        return domain_name;
+    }
+
+    public void setDomain_name(String domain_name) {
+        this.domain_name = domain_name;
     }
 
     @Override
