@@ -9,6 +9,12 @@ public class Email {
         }
     }
 
+    public Email(String email) {
+        String[] parts = email.split("@");
+        user_name = parts[0];
+        domain_name = parts[1];
+    }
+
     public String getUser_name() {
         return user_name;
     }

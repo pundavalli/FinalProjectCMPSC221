@@ -52,6 +52,10 @@ public abstract class People implements Payable {
         this.email = email;
     }
 
+    public void setEmail(String email) {
+        this.email = new Email(email);
+    }
+
     public Address getAddress() {
         return address;
     }
