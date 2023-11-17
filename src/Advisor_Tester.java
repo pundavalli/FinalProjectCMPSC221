@@ -1,559 +1,440 @@
-//Aravind Alwar;
-//October 30, 2023;
-//Advisor_Tester.java;
-
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.Scanner;
 
 public class Advisor_Tester {
     //This will be our tester,Advisor_Tester file
     public static void main(String[] Args) {
-        //Variables needed for the program
-        Scanner scanner = new Scanner(System.in); //Scanner
-        boolean work = true;
-        //-Variables for the Advisor
-        String ad_F_Initial = " ";
-        String ad_M_Initial = " ";
-        String ad_L_Initial = " ";
-        String acad_ID = " ";
-        int ad_Phone = 0;
-        String adv_Email;
-        String ad_Street = " ";
-        String ad_City = " ";
-        String ad_State = " ";
-        int ad_Zip = 00000;
-        String ad_Title = " ";
-        double ad_Salary = 0.0;
-        int ad_Hired_Month = 0;
-        int ad_Hired_Day = 0;
-        int ad_Hired_Year = 0;
-        Advisor[] heads = new Advisor[3]; //3 Advisors
-        ArrayList<Advisor> heads = new ArrayList<>();
-        //-Student,advisee Variables
-        String student_F_Initial = " ";
-        String student_M_Initial = " ";
-        String student_L_Initial = " ";
-        String student_ID = " ";
-        int student_Phone;
-        String student_Email;
-        String student_Street = " ";
-        String student_City = " ";
-        String student_State = " ";
-        int student_Zip = 00000;
-        String major_Student = " ";
-        int student_Admitted_Month, student_Admitted_Day, student_Admitted_Year;
-        Student[] student_A = new Student[3]; //3 Students for each advisor
-        //-Course Variables
-        String course = " ";
-        int course_Credits = 0;
-        double total_Price = 0.0;
-        Course[] classes1 = new Course[3]; //3 Courses,max for each student----
-        Course[] classes2 = new Course[3];
-        Course[] classes3 = new Course[3];
-        //Functions for the program
-        int input = 0;
-        int edit_Op = 0;
-        int address_Edit = 0;
-        int add_Course = 0;
-        int add_Student = 0;
-        int ad_Tally = 0;
-        int stu_Tally_A = 0; //How many Students are currently in the Advisor's list,for each advisor.
-        int stu_Edit = 0;
-        int search = 0;
-        System.out.println("Welcome to the Advisor Data System. You enter in an advisor info,we will do the work to manage the system.");
-        while (work) {
-            System.out.println("Choose a valid option from the following values");
-            System.out.println("1.Add an Advisor to the System.\n2.Edit an advisor in the advisor array.\n3.Delete an advisor in the array.\n4.Display an advisor’s basic information and the advisees in the array.\n5.Exit the application.");
-            input = scanner.nextInt();
+        Scanner scanner = new Scanner(System.in);
+        boolean exit = false;
 
+        String name, acad_ID;
+        int month, day, year;
+        ArrayList<Advisor> advisors = new ArrayList<>();
+
+        //Creating test advisors
+        Advisor michael = new Advisor("Michael " + "R " + "Yautaro", "mry2093");
+        michael.setPhoneNum(0);
+        michael.setEmail("mry2093@psu.edu");
+        michael.setAddress(new Address(25, "Yearsley Mills", "Media", "PA", 19380));
+        ArrayList<Advisee> student_list = new ArrayList<>(0); //Array List for advisor michael.
+        michael.setAdvisees(student_list);
+        michael.setHiredDate(new Date(2006, 2, 20));
+        michael.setTitle("Professor");
+        michael.setAnnualSalary(0);
+        advisors.add(michael);
+
+        Advisor ben = new Advisor("Ben " + "J " + "Stevens", "bjs1963");
+        ben.setPhoneNum(0);
+        ben.setEmail("bjs1963@psu.edu");
+        ben.setAddress(new Address(146, "Jeremy Lane", "Reading", "PA", 19380));
+        ArrayList<Advisee> student_list2 = new ArrayList<>(0); //Array List for advisor ben.
+        ben.setAdvisees(student_list2);
+        ben.setHiredDate(new Date(1997, 9, 10));
+        ben.setTitle("TA");
+        ben.setAnnualSalary(0);
+        advisors.add(ben);
+
+        Advisee aravind = new Advisee("Aravind " + "H " + "Alwar", "aha5495");
+        michael.getAdvisees().add(aravind);
+
+        int input;
+
+        System.out.println("Welcome to the Advisor Data System. You enter in an advisor info, we will do the work to manage the system.");
+        while (!exit) {
+            System.out.println("Choose a valid option from the following values");
+            System.out.println("1.Add an advisor to the System.\n2.Edit an advisor in the system.\n3.Add a student to an advisor.\n4.Add a course to a student.\n5.Delete an advisor in the system.\n6.Display an advisor’s basic information and the advisees in the system.\n7.Exit the application.");
+            input = scanner.nextInt();
             if (input == 1) { //Add An Advisor
-                boolean advisors = true;
-                boolean students = true; //We may now add a student or so to the list.
-                while (advisors) {
+                boolean adding_advisors = true;
+                while (adding_advisors) {
                     System.out.println("You will now add an advisor to the array of advisors");
-                    System.out.println("Enter Advisor's first name:");
-                    ad_F_Initial = scanner.next();
-                    System.out.println("Enter Advisor's middle name:");
-                    ad_M_Initial = scanner.next();
-                    System.out.println("Enter Advisor's last name:");
-                    ad_L_Initial = scanner.next();
+                    System.out.println("Enter Advisor's full name:");
+                    name = scanner.next();
                     System.out.println("Enter Advisor's ID:");
                     acad_ID = scanner.next();
+                    Advisor a = new Advisor(name, acad_ID);
+
                     System.out.println("Enter Advisor's Phone Number:");
-                    ad_Phone = scanner.nextInt();
-                    adv_Email = acad_ID + "@psu.edu";
+                    a.setPhoneNum(scanner.nextLong());
+                    a.setEmail(acad_ID + "@psu.edu");
+
+                    System.out.println("You will now enter the advisor's address");
+                    a.setAddress(new Address());
+                    System.out.println("Enter Advisor's House Num:");
+                    a.getAddress().setHouse_number(scanner.nextInt());
                     System.out.println("Enter Advisor's Street:");
-                    ad_Street = scanner.next();
+                    a.getAddress().setStreet(scanner.next());
                     System.out.println("Enter Advisor's City:");
-                    ad_City = scanner.next();
+                    a.getAddress().setTown(scanner.next());
                     System.out.println("Enter Advisor's State:");
-                    ad_State = scanner.next();
+                    a.getAddress().setState(scanner.next());
                     System.out.println("Enter Advisor's Zip:");
-                    ad_Zip = scanner.nextInt();
+                    a.getAddress().setZip_code(scanner.nextInt());
                     System.out.println("Enter Advisor's Title:");
-                    ad_Title = scanner.next();
+                    a.setTitle(scanner.next());
+
                     System.out.println("Enter Advisor's Annual Salary:");
-                    ad_Salary = scanner.nextDouble();
+                    a.setAnnualSalary(scanner.nextDouble());
+
                     System.out.println("Enter Advisor's Hiring Month:");
-                    ad_Hired_Month = scanner.nextInt();
-                    while (ad_Hired_Month < 1 || ad_Hired_Month > 12) {
+                    month = scanner.nextInt();
+                    while (month < 1 || month > 12) {
                         System.out.println("Not a valid hiring month.");
                         System.out.println("Enter Advisor's Hiring Month:");
-                        ad_Hired_Month = scanner.nextInt();
+                        month = scanner.nextInt();
                     }
                     System.out.println("Enter Advisor's Hiring Day:");
-                    ad_Hired_Day = scanner.nextInt();
-                    while (ad_Hired_Day < 1 || ad_Hired_Day > 31) {
+                    day = scanner.nextInt();
+                    while (day < 1 || day > 31) {
                         System.out.println("Not a valid hiring Day.");
                         System.out.println("Enter Advisor's Hiring day:");
-                        ad_Hired_Day = scanner.nextInt();
+                        day = scanner.nextInt();
                     }
                     System.out.println("Enter Advisor's Hiring Year:");
-                    ad_Hired_Year = scanner.nextInt();
-                    while (ad_Hired_Year < 1970) {
+                    year = scanner.nextInt();
+                    while (year < 1970) {
                         System.out.println("Not a valid hiring Year.");
                         System.out.println("Enter Advisor's Hiring Year:");
-                        ad_Hired_Year = scanner.nextInt();
+                        year = scanner.nextInt();
                     }
-                    while (students && stu_Tally_A < 4) { //Going to add a student to the list of advisees.
-                        System.out.println("Enter Student's first name:");
-                        student_F_Initial = scanner.next();
-                        System.out.println("Enter Student's middle name:");
-                        student_M_Initial = scanner.next();
-                        System.out.println("Enter Student's last name:");
-                        student_L_Initial = scanner.next();
-                        System.out.println("Enter Student's ID:");
-                        student_ID = scanner.next();
-                        System.out.println("Enter Student's Phone Number:");
-                        student_Phone = scanner.nextInt();
-                        student_Email = student_ID + "@psu.edu";
-                        System.out.println("Enter Student's Street Number:");
-                        student_Street = scanner.next();
-                        System.out.println("Enter Student's City:");
-                        student_City = scanner.next();
-                        System.out.println("Enter Student's State:");
-                        student_State = scanner.next();
-                        System.out.println("Enter Student's Zip:");
-                        student_Zip = scanner.nextInt();
-                        System.out.println("Enter Student's Major:");
-                        major_Student = scanner.next();
-                        System.out.println("Enter Student's Admission Month:");
-                        student_Admitted_Month = scanner.nextInt();
-                        while (student_Admitted_Month < 1 || student_Admitted_Month > 12) {
-                            System.out.println("Not a valid hiring month.");
-                            System.out.println("Enter Student's Admission Month:");
-                            student_Admitted_Month = scanner.nextInt();
-                        }
-                        System.out.println("Enter Student's Admission Day:");
-                        student_Admitted_Day = scanner.nextInt();
-                        while (student_Admitted_Day < 1 || student_Admitted_Day > 31) {
-                            System.out.println("Not a valid hiring day.");
-                            System.out.println("Enter Student's Admission Day:");
-                            student_Admitted_Day = scanner.nextInt();
-                        }
-                        System.out.println("Enter Student's Admission Year:");
-                        student_Admitted_Year = scanner.nextInt();
-                        while (student_Admitted_Year < 1) {
-                            System.out.println("Not a valid hiring Year.");
-                            System.out.println("Enter Student's Admission Year:");
-                            student_Admitted_Year = scanner.nextInt();
-                        }
-                        boolean Class = true;
-                        while (Class) { //Adding classes
-                            System.out.println("Type in the course name:");
-                            course = scanner.next();
-                            System.out.println("Credits for the course:");
-                            course_Credits = scanner.nextInt();
-                            if (course_Credits < 0) {
-                                while (course_Credits < 0) {
-                                    System.out.println("Invalid value of credits,try again please");
-                                    course_Credits = scanner.nextInt();
-                                }
-                            }
-                            total_Price += course_Credits * 500; //Add this to the total price.
-                            System.out.println("Add another Course:");
-                            add_Course = scanner.nextInt(); //If yes,do so.
-                            if (add_Course == 0) {
-                                Class = false;
-                            }
-                        }
-                        stu_Tally_A += 1; //Added a student
-                        //Name the courses for the student
-                        //Student A Courses
-                        Course A = new Course(course, course_Credits, total_Price);
-                        Course C = new Course(course, course_Credits, total_Price);
-                        Course E = new Course(course, course_Credits, total_Price);
-                        //Student B Courses
-                        Course B = new Course(course, course_Credits, total_Price);
-                        Course D = new Course(course, course_Credits, total_Price);
-                        Course F = new Course(course, course_Credits, total_Price);
-                        //Student C Courses
-                        Course G = new Course(course, course_Credits, total_Price);
-                        Course H = new Course(course, course_Credits, total_Price);
-                        Course I = new Course(course, course_Credits, total_Price);
-                        classes1[0] = A; //Title this as Course_A to first positiion.
-                        classes1[1] = C;
-                        classes1[2] = E;
-                        classes2[0] = B; //Title this as Course_A to first positiion.
-                        classes2[1] = D;
-                        classes2[2] = F;
-                        classes3[0] = G; //Title this as Course_G to first position for the 3rd advisee.
-                        classes3[1] = H;
-                        classes3[2] = I;
-                        String student_Address = student_Street + "," + student_City + "," + student_State + "," + student_Zip;
-                        double student_Tuition = total_Price + 1000; //Student Tuition sum
-                        Date student_Admission = new Date(student_Admitted_Month, student_Admitted_Day, student_Admitted_Year);
+                    a.setHiredDate(new Date(month, day, year));
 
-                        for (Student n : student_A) {
-                            n = new Student(student_F_Initial + student_M_Initial + student_L_Initial, student_ID);
-                            n.setMajor(major_Student);
-                            n.setAdmittedDate(student_Admission);
-                            n.setTuition(student_Tuition);
-                            n.setPhoneNum(student_Phone);
-                            n.setEmail(student_Email);
-                            n.setAddress(new Address(100, student_Street, student_City, student_State, student_Zip));
-                            ArrayList<Course> list = new ArrayList<>();
-                            Collections.addAll(list, classes1);
-                            n.setCourses(list);
-                        }
-                        //Created 3 Students
-                        System.out.println("Want to add in another Student:");
-                        add_Student = scanner.nextInt();
-                        if (add_Student == 0 || stu_Tally_A > 3) {
-                            students = false; //No more adding students.
-                        }
-                    }
-                    Date ad_Hired = new Date(ad_Hired_Month, ad_Hired_Day, ad_Hired_Year);
-                    Advisor a = new Advisor(ad_F_Initial + ad_M_Initial + ad_L_Initial, acad_ID);
-                    a.setPhoneNum(ad_Phone);
-                    a.setEmail(adv_Email);
-                    a.setAddress(new Address(100, ad_Street, ad_City, ad_State, ad_Zip));
-                    ArrayList<Student> list = new ArrayList<>();
-                    Collections.addAll(list, student_A);
-                    a.setAdvisees(list);
-                    a.setHiredDate(ad_Hired);
-                    a.setTitle(ad_Title);
-                    a.setAnnualSalary(ad_Salary);
+                    advisors.add(a);
 
-                    heads[ad_Tally] = a; //First Advisor created;
-                    ad_Tally += 1;
-                    System.out.println("Advisor has been successfully added!Want to add another Advisor:");
+                    System.out.println("Advisor has been successfully added! Want to add another Advisor? Enter 0 for no:");
                     input = scanner.nextInt();
-                    if (input == 0 || ad_Tally > 3) {
-                        advisors = false;
-                    }
+                    adding_advisors = (input != 0);
                 }
-            } else if (input == 2) {
-                boolean advisors = true;
-                boolean students = false; //Still not true for now
-                boolean Class = false;
-                Advisor a = searchAdvisor(scanner, heads);
-
-                while (advisors) {
+            } else if (input == 2) { //Edit an Advisor
+                boolean editing_advisor = true;
+                boolean editing_student = false; //Still not true for now
+                Advisor a = searchAdvisor(scanner, advisors);
+                while (editing_advisor) {
                     System.out.println("Please select a following field to edit");
-                    System.out.println("1.Edit Advisor's first name:");
-                    System.out.println("2.Edit Advisor's Middle name:");
-                    System.out.println("3.Edit Advisor's Last name:");
-                    System.out.println("4.Edit Advisor's Academic_ID:");
-                    System.out.println("5.Edit Advisor's Phone number:");
-                    System.out.println("6.Edit Advisor's Address:");
-                    System.out.println("7.Edit Advisor's Title:");
-                    System.out.println("8.Edit Advisor's Hiring Month:");
-                    System.out.println("9.Edit Advisor's Hiring Day:");
-                    System.out.println("10.Edit Advisor's Year:");
-                    System.out.println("11.Edit Student List:");
-                    System.out.println("12.Return to the main menu:");
-                    edit_Op = scanner.nextInt(); //Choice 1-12;
-                    if (edit_Op == 1) {
-                        System.out.println("Type in the new first name:");
-                        ad_F_Initial = scanner.next();
-                        String[] parts = a.getName().split(" ");
-                        a.setName(ad_F_Initial + parts[1] + parts[2]);
-                        System.out.println("Updated First name Successfully!");
-                    } else if (edit_Op == 2) {
-                        System.out.println("Type in the new middle name:");
-                        ad_M_Initial = scanner.next();
-                        String[] parts = a.getName().split(" ");
-                        a.setName(parts[0] + ad_M_Initial + parts[2]);
-                        System.out.println("Updated Middle name Successfully!");
-                        if (ad_M_Initial.equalsIgnoreCase("none")) {
-                            ad_M_Initial = " "; //No middle name
-                            System.out.println("Updated Middle name Successfully!");
-                        }
-                    } else if (edit_Op == 3) {
-                        System.out.println("Type in the new surname:");
-                        ad_L_Initial = scanner.next();
-                        String[] parts = a.getName().split(" ");
-                        a.setName(parts[0] + parts[1] + ad_L_Initial);
-                        System.out.println("Updated Last name Successfully!");
-                    } else if (edit_Op == 4) {
+                    System.out.println("1.Edit Advisor's Name:");
+                    System.out.println("2.Edit Advisor's Academic_ID:");
+                    System.out.println("3.Edit Advisor's Phone number:");
+                    System.out.println("4.Edit Advisor's Address:");
+                    System.out.println("5.Edit Advisor's Title:");
+                    System.out.println("6.Edit Advisor's Hiring Month:");
+                    System.out.println("7.Edit Advisor's Hiring Day:");
+                    System.out.println("8.Edit Advisor's Year:");
+                    System.out.println("9.Edit Student List:");
+                    System.out.println("10.Return to the main menu:");
+                    input = scanner.nextInt();
+                    if (input == 1) {
+                        System.out.println("Type in the new name:");
+                        a.setName(scanner.next());
+                        System.out.println("Updated Name Successfully!");
+                    } else if (input == 2) {
                         System.out.println("Type in the new Advisor ID:");
-                        acad_ID = scanner.next();
-                        a.setID(acad_ID);
+                        a.setID(scanner.next());
                         System.out.println("Updated Advisor ID Successfully!");
-                    } else if (edit_Op == 5) {
+                    } else if (input == 3) {
                         System.out.println("Type in the new Advisor Phone Number:");
-                        ad_Phone = scanner.nextInt();
-                        a.setPhoneNum(ad_Phone);
+                        a.setPhoneNum(scanner.nextLong());
                         System.out.println("Updated Advisor Phone Number Successfully!");
-                    } else if (edit_Op == 6) {
-                        System.out.println("Type in the new Advisor Address,specifically which part:");
-                        address_Edit = scanner.nextInt();
-                        if (address_Edit == 1) {
-                            System.out.println("Enter Advisor's new Street Number:");
-                            ad_Street = scanner.next();
-                            a.getAddress().setStreet(ad_Street);
+                    } else if (input == 4) {
+                        System.out.println("Choose which part to edit:");
+                        System.out.println("1.House Number");
+                        System.out.println("2.Street Name");
+                        System.out.println("3.City");
+                        System.out.println("4.State");
+                        System.out.println("5.ZIPCODE");
+                        input = scanner.nextInt();
+
+                        if (input == 1) {
+                            System.out.println("Enter Advisor's new House Number:");
+                            a.getAddress().setHouse_number(scanner.nextInt());
+                            System.out.println("House Number updated successfully!");
+                        } else if (input == 2) {
+                            System.out.println("Enter Advisor's new Street Name:");
+                            a.getAddress().setStreet(scanner.next());
                             System.out.println("Street Number updated successfully!");
-                        } else if (address_Edit == 2) {
+                        } else if (input == 3) {
                             System.out.println("Enter Advisor's new City:");
-                            ad_City = scanner.next();
-                            a.getAddress().setTown(ad_City);
+                            a.getAddress().setTown(scanner.next());
                             System.out.println("City name updated successfully!");
-                        } else if (address_Edit == 3) {
+                        } else if (input == 4) {
                             System.out.println("Enter Advisor's new State:");
-                            ad_Street = scanner.next();
-                            a.getAddress().setState(student_State);
+                            a.getAddress().setState(scanner.next());
                             System.out.println("State updated successfully!");
-                        } else if (address_Edit == 4) {
+                        } else if (input == 5) {
                             System.out.println("Enter Advisor's new ZIPCODE:");
-                            ad_Zip = scanner.nextInt();
-                            a.getAddress().setZip_code(ad_Zip);
+                            a.getAddress().setZip_code(scanner.nextInt());
                             System.out.println("Zipcode updated successfully!");
-                        } else if (address_Edit == 0) {
-                            System.out.println("Bye Bye.");
-                        } else {
-                            while (address_Edit < 1 && address_Edit > 4) {
-                                System.out.println("Type in the new Advisor Address,specifically which part:");
-                                address_Edit = scanner.nextInt();
-                            }
                         }
-                    } else if (edit_Op == 7) {
+                    } else if (input == 5) {
                         System.out.println("Enter Advisor's new Title.");
-                        ad_Title = scanner.next();
-                        a.setTitle(ad_Title);
+                        a.setTitle(scanner.next());
                         System.out.println("Title Updated Successfully.");
-                    } else if (edit_Op == 8) {
+                    } else if (input == 6) {
                         System.out.println("Enter Advisor's updated Hiring Month:");
-                        ad_Hired_Month = scanner.nextInt();
-                        if (ad_Hired_Month < 1 || ad_Hired_Month > 12) {
-                            while (ad_Hired_Month < 1 || ad_Hired_Month > 12) {
-                                System.out.println("Not a valid hiring month.");
-                                System.out.println("Enter Advisor's updated Hiring Month:");
-                                ad_Hired_Month = scanner.nextInt();
-                            }
+                        month = scanner.nextInt();
+                        while (month < 1 || month > 12) {
+                            System.out.println("Not a valid hiring month.");
+                            System.out.println("Enter Advisor's updated Hiring Month:");
+                            month = scanner.nextInt();
                         }
-                        a.getHiredDate().setMonth(ad_Hired_Month);
-                    } else if (edit_Op == 9) {
+                        a.getHiredDate().setMonth(month);
+                    } else if (input == 7) {
                         System.out.println("Enter Advisor's updated Hiring Day:");
-                        ad_Hired_Day = scanner.nextInt();
-                        if (ad_Hired_Day < 1 || ad_Hired_Day > 31) {
-                            while (ad_Hired_Day < 1 || ad_Hired_Day > 31) {
-                                System.out.println("Not a valid hiring Day.");
-                                System.out.println("Enter Advisor's updated Hiring day:");
-                                ad_Hired_Day = scanner.nextInt();
-                            }
+                        day = scanner.nextInt();
+                        while (day < 1 || day > 31) {
+                            System.out.println("Not a valid hiring Day.");
+                            System.out.println("Enter Advisor's updated Hiring day:");
+                            day = scanner.nextInt();
                         }
-                        a.getHiredDate().setDate(ad_Hired_Day);
-                    } else if (edit_Op == 10) {
+                        a.getHiredDate().setDate(day);
+                    } else if (input == 8) {
                         System.out.println("Enter Advisor's updated Hiring Year:");
-                        ad_Hired_Year = scanner.nextInt();
-                        if (ad_Hired_Day < 1 || ad_Hired_Day > 31) {
-                            while (ad_Hired_Year < 1970) {
-                                System.out.println("Not a valid hiring Year.");
-                                System.out.println("Enter Advisor's Hiring Year:");
-                                ad_Hired_Year = scanner.nextInt();
-                            }
+                        year = scanner.nextInt();
+                        while (year < 1970) {
+                            System.out.println("Not a valid hiring Year.");
+                            System.out.println("Enter Advisor's Hiring Year:");
+                            year = scanner.nextInt();
                         }
-                        a.getHiredDate().setYear(ad_Hired_Year);
-                    } else if (edit_Op == 11) {
-                        students = true; //We may now add a student or so to the list.
-                        Student s = searchStudent(scanner, a.getAdvisees().toArray(new Student[0]));
-                        while (students) { //Going to add a student to the list of advisees.
+                        a.getHiredDate().setYear(year);
+                    } else if (input == 9) {
+                        editing_student = true;
+                        Advisee s = searchStudent(scanner, a.getAdvisees());
+                        while (editing_student) { //Going to add a student to the list of advisees.
                             System.out.println("Please select a following field to edit");
-                            System.out.println("1.Edit Student's first name:");
-                            System.out.println("2.Edit Student's Middle name:");
-                            System.out.println("3.Edit Student's Last name:");
-                            System.out.println("4.Edit Student's Academic_ID:");
-                            System.out.println("5.Edit Student's Phone number:");
-                            System.out.println("6.Edit Student's Address:");
-                            System.out.println("7.Edit Student's Title:");
-                            System.out.println("8.Edit Student's Admission Month:");
-                            System.out.println("9.Edit Student's Admission Day:");
-                            System.out.println("10.Edit Student's Admission:");
-                            System.out.println("11.Return to the main menu:");
-                            stu_Edit = scanner.nextInt();
-                            if (stu_Edit == 1) {
-                                System.out.println("Type in the new first name:");
-                                student_F_Initial = scanner.next();
-                                String[] parts = s.getName().split(" ");
-                                a.setName(student_F_Initial + parts[1] + parts[2]);
-                                System.out.println("Updated First name Successfully!");
-                            } else if (stu_Edit == 2) {
-                                System.out.println("Type in the new middle name:");
-                                student_M_Initial = scanner.next();
-                                String[] parts = s.getName().split(" ");
-                                a.setName(parts[0] + student_M_Initial + parts[2]);
-                                System.out.println("Updated Student Middle name Successfully!");
-                                if (student_M_Initial.equalsIgnoreCase("none")) {
-                                    student_M_Initial = " "; //No middle name
-                                    System.out.println("Updated Middle name Successfully!");
-                                }
-                            } else if (stu_Edit == 3) {
-                                System.out.println("Type in the new surname:");
-                                student_L_Initial = scanner.next();
-                                String[] parts = s.getName().split(" ");
-                                a.setName(parts[0] + parts[1] + student_L_Initial);
+                            System.out.println("1.Edit Student's name:");
+                            System.out.println("2.Edit Student's Academic_ID:");
+                            System.out.println("3.Edit Student's Phone number:");
+                            System.out.println("4.Edit Student's Address:");
+                            System.out.println("5.Edit Student's Title:");
+                            System.out.println("6.Edit Student's Admission Month:");
+                            System.out.println("7.Edit Student's Admission Day:");
+                            System.out.println("8.Edit Student's Admission:");
+                            System.out.println("9.Return to the main menu:");
+                            input = scanner.nextInt();
+                            if (input == 1) {
+                                System.out.println("Type in the new name:");
+                                s.setName(scanner.next());
                                 System.out.println("Updated Last name Successfully!");
-                            } else if (stu_Edit == 4) {
+                            } else if (input == 2) {
                                 System.out.println("Type in the new Student ID:");
-                                student_ID = scanner.next();
-                                s.setID(student_ID);
+                                s.setID(scanner.next());
                                 System.out.println("Updated Advisor ID Successfully!");
-                            } else if (stu_Edit == 5) {
+                            } else if (input == 3) {
                                 System.out.println("Type in the new Student Phone Number:");
-                                student_Phone = scanner.nextInt();
-                                s.setPhoneNum(student_Phone);
+                                s.setPhoneNum(scanner.nextLong());
                                 System.out.println("Updated Student Phone Number Successfully!");
-                            } else if (stu_Edit == 6) {
-                                System.out.println("Type in the new Student Address,specifically which part:");
-                                address_Edit = scanner.nextInt();
-                                if (address_Edit == 1) {
-                                    System.out.println("Enter Student's new Street Number:");
-                                    student_Street = scanner.next();
-                                    s.getAddress().setStreet(student_Street);
-                                    System.out.println("Street NNumber updated successfully!");
-                                } else if (address_Edit == 2) {
+                            } else if (input == 4) {
+                                System.out.println("Choose which part to edit:");
+                                System.out.println("1.House Number");
+                                System.out.println("2.Street Name");
+                                System.out.println("3.City");
+                                System.out.println("4.State");
+                                System.out.println("5.ZIPCODE");
+                                input = scanner.nextInt();
+
+                                if (input == 1) {
+                                    System.out.println("Enter Student's new House number :");
+                                    s.getAddress().setHouse_number(scanner.nextInt());
+                                    System.out.println("House Number updated successfully!");
+                                } else if (input == 2) {
+                                    System.out.println("Enter Student's new Street name :");
+                                    s.getAddress().setStreet(scanner.next());
+                                    System.out.println("Street name updated successfully!");
+                                } else if (input == 3) {
                                     System.out.println("Enter Student's new City:");
-                                    student_City = scanner.next();
-                                    s.getAddress().setTown(student_City);
+                                    s.getAddress().setTown(scanner.next());
                                     System.out.println("City name updated successfully!");
-                                } else if (address_Edit == 3) {
+                                } else if (input == 4) {
                                     System.out.println("Enter Student's new State:");
-                                    student_State = scanner.next();
-                                    s.getAddress().setState(student_State);
+                                    s.getAddress().setState(scanner.next());
                                     System.out.println("State updated successfully!");
-                                } else if (address_Edit == 4) {
+                                } else if (input == 5) {
                                     System.out.println("Enter Student's new ZIPCODE:");
-                                    student_Zip = scanner.nextInt();
-                                    s.getAddress().setZip_code(student_Zip);
+                                    s.getAddress().setZip_code(scanner.nextInt());
                                     System.out.println("Zipcode updated successfully!");
-                                } else if (address_Edit == 0) {
+                                } else if (input == 0) {
                                     System.out.println("Bye Bye.");
-                                } else {
-                                    while (address_Edit < 1 && address_Edit > 4) {
-                                        System.out.println("Type in the new Student Address,specifically which part:");
-                                        address_Edit = scanner.nextInt();
-                                    }
                                 }
-                            } else if (stu_Edit == 7) {
+                            } else if (input == 5) {
                                 System.out.println("Enter Student's Major:");
-                                major_Student = scanner.next();
-                                s.setMajor(major_Student);
+                                s.setMajor(scanner.next());
                                 System.out.println("Updated major successfully!");
-                            } else if (stu_Edit == 8) {
+                            } else if (input == 6) {
                                 System.out.println("Enter Student's Admission Month:");
-                                student_Admitted_Month = scanner.nextInt();
-                                if (student_Admitted_Month < 1 || student_Admitted_Month > 12) {
-                                    while (student_Admitted_Month < 1 || student_Admitted_Month > 12) {
-                                        System.out.println("Not a valid admission month.");
-                                        System.out.println("Enter Student's Admission Month:");
-                                        student_Admitted_Month = scanner.nextInt();
-                                    }
+                                month = scanner.nextInt();
+                                while (month < 1 || month > 12) {
+                                    System.out.println("Not a valid admission month.");
+                                    System.out.println("Enter Student's Admission Month:");
+                                    month = scanner.nextInt();
                                 }
-                                s.getAdmittedDate().setMonth(student_Admitted_Month);
+                                s.getAdmittedDate().setMonth(month);
                                 System.out.println("Updated the Month successfully.");
-                            } else if (stu_Edit == 9) {
+                            } else if (input == 7) {
                                 System.out.println("Enter Student's Admission Day:");
-                                student_Admitted_Day = scanner.nextInt();
-                                if (student_Admitted_Day < 1 || student_Admitted_Day > 31) {
-                                    while (student_Admitted_Day < 1 || student_Admitted_Day > 31) {
-                                        System.out.println("Not a valid admission Day.");
-                                        System.out.println("Enter Student's Admission Day:");
-                                        student_Admitted_Day = scanner.nextInt();
-                                    }
+                                day = scanner.nextInt();
+                                while (day < 1 || day > 31) {
+                                    System.out.println("Not a valid admission Day.");
+                                    System.out.println("Enter Student's Admission Day:");
+                                    day = scanner.nextInt();
                                 }
-                                s.getAdmittedDate().setDate(student_Admitted_Day);
+                                s.getAdmittedDate().setDate(day);
                                 System.out.println("Updated the Month successfully.");
-                            } else if (stu_Edit == 10) {
+                            } else if (input == 8) {
                                 System.out.println("Enter Student's Admission Year:");
-                                student_Admitted_Year = scanner.nextInt();
-                                if (student_Admitted_Year < 1) {
-                                    while (student_Admitted_Year < 1) {
-                                        System.out.println("Not a valid hiring Year.");
-                                        System.out.println("Enter Student's Admission Year:");
-                                        student_Admitted_Year = scanner.nextInt();
-                                    }
+                                year = scanner.nextInt();
+                                while (year < 1) {
+                                    System.out.println("Not a valid hiring Year.");
+                                    System.out.println("Enter Student's Admission Year:");
+                                    year = scanner.nextInt();
                                 }
-                                s.getAdmittedDate().setYear(student_Admitted_Year);
+                                s.getAdmittedDate().setYear(year);
                                 System.out.println("Updated the Month successfully.");
-                            } else if (stu_Edit == 11) {
+                            } else if (input == 9) {
                                 System.out.println("Updated info successfully,bye bye."); //Ending the program editing
-                                students = false;
+                                editing_student = false;
                             }
                         }
-                    } else if (edit_Op == 12) {
-                        advisors = false;
+                    } else if (input == 10) {
+                        editing_advisor = false;
+                    } else {
+                        System.out.println("Invalid option");
                     }
                 }
             } else if (input == 3) {
-                boolean advisors = true;
-                while (advisors) {
-                    System.out.println("Enter the ID for the Advisor:");
-                    acad_ID = scanner.next();
-                    int deletion_index = -1;
+                boolean adding_students = true;
+                boolean adding_students_for_one_advisor = true;
+                //Search for an advisor to further add the advisees
+                while (adding_students) { //Going to add a student to the list of advisees.
+                    Advisor a = searchAdvisor(scanner, advisors);
+                    while (adding_students_for_one_advisor) {
+                        if (a != null) {
+                            System.out.println("Enter Student's name:");
+                            name = scanner.next();
+                            System.out.println("Enter Student's ID:");
+                            acad_ID = scanner.next();
+                            Advisee s = new Advisee(name, acad_ID);
 
-                    //We now loop through the list of Advisors,Heads;
-                    try {
-                        for (int i = 0; i <= heads.length; i++) {
-                            if (heads[i].getID() == acad_ID) {
-                                deletion_index = i;
-                                break;
+                            System.out.println("Enter Student's Phone Number:");
+                            s.setPhoneNum(scanner.nextLong());
+                            s.setEmail(acad_ID + "@psu.edu");
+
+                            System.out.println("Now you will enter the student's address");
+                            s.setAddress(new Address());
+                            System.out.println("Enter Student's Street Num:");
+                            s.getAddress().setHouse_number(scanner.nextInt());
+                            System.out.println("Enter Student's Street Name:");
+                            s.getAddress().setStreet(scanner.next());
+                            System.out.println("Enter Student's City:");
+                            s.getAddress().setTown(scanner.next());
+                            System.out.println("Enter Student's State:");
+                            s.getAddress().setState(scanner.next());
+                            System.out.println("Enter Student's Zip:");
+                            s.getAddress().setZip_code(scanner.nextInt());
+
+                            System.out.println("Enter Student's Major:");
+                            s.setMajor(scanner.next());
+
+                            System.out.println("Enter Student's Admission Month:");
+                            month = scanner.nextInt();
+                            while (month < 1 || month > 12) {
+                                System.out.println("Not a valid hiring month.");
+                                System.out.println("Enter Student's Admission Month:");
+                                month = scanner.nextInt();
                             }
-                        }
+                            System.out.println("Enter Student's Admission Day:");
+                            day = scanner.nextInt();
+                            while (day < 1 || day > 31) {
+                                System.out.println("Not a valid hiring day.");
+                                System.out.println("Enter Student's Admission Day:");
+                                day = scanner.nextInt();
+                            }
+                            System.out.println("Enter Student's Admission Year:");
+                            year = scanner.nextInt();
+                            while (year < 1) {
+                                System.out.println("Not a valid hiring Year.");
+                                System.out.println("Enter Student's Admission Year:");
+                                year = scanner.nextInt();
+                            }
+                            s.setAdmittedDate(new Date(month, day, year));
 
-                        for (int i = deletion_index; i < heads.length - 1; i++) {
-                            heads[i] = heads[i++];
-                        }
-                        heads[heads.length - 1] = null;
-                        System.out.println("Advisor was deleted.");
+                            a.getAdvisees().add(s);
 
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                        System.out.println("Advisor could not be found");
+                            System.out.println("Want to add in another Student? Enter 0 for no:");
+                            input = scanner.nextInt();
+                            adding_students_for_one_advisor = (input != 0);
+                        } else {
+                            System.out.println("Advisor was not found");
+                        }
                     }
 
-                    System.out.println("Search for another advisor? :");
-                    search = scanner.nextInt();
-                    if (search == 0) {
-                        advisors = false; //Exit function
-                    }
+                    System.out.println("Add students for another advisor? Enter 0 for no:");
+                    input = scanner.nextInt();
+                    adding_students = (input != 0);
                 }
             } else if (input == 4) {
-                boolean advisors = true;
-                while (advisors) {
+                Advisee s = searchStudent(scanner, searchAdvisor(scanner, advisors).getAdvisees());
+                boolean adding_courses = true;
+                while (adding_courses) { //Adding classes
+                    Course c = new Course();
+                    System.out.println("Type in the course name:");
+                    c.setCourseName(scanner.next());
+                    System.out.println("Number of credits for the course:");
+                    int course_Credits = scanner.nextInt();
+                    while (course_Credits < 0) {
+                        System.out.println("Invalid value of credits,try again please");
+                        course_Credits = scanner.nextInt();
+                    }
+                    c.setNumOfCredits(course_Credits);
+                    System.out.println("Price per credit for the course:");
+                    double price = scanner.nextDouble();
+                    while (price < 0) {
+                        System.out.println("Invalid value of price per credit,try again please");
+                        price = scanner.nextDouble();
+                    }
+                    c.setPrice(price);
+
+                    s.getCourses().add(c);
+
+                    System.out.println("Add another Course? Enter 0 for no:");
+                    input = scanner.nextInt();
+                    adding_courses = (input != 0);
+                }
+            } else if (input == 5) {
+                boolean deleting_advisors = true;
+                while (deleting_advisors) {
+                    Advisor deletedAdvisor = searchAdvisor(scanner, advisors);
+                    if (!advisors.remove(deletedAdvisor)) {
+                        System.out.println("Advisor was not found");
+                    }
+
+                    System.out.println("Delete for another advisor? Enter 0 for no:");
+                    input = scanner.nextInt();
+                    deleting_advisors = (input != 0);
+                }
+            } else if (input == 6) {
+                boolean displaying_advisors = true;
+                while (displaying_advisors) {
                     Advisor a = null;
                     try {
-                        a = searchAdvisor(scanner, heads);
+                        a = searchAdvisor(scanner, advisors);
                         a.Display();
                     } catch (NullPointerException e) {
                         System.out.println("Advisor was not found");
                     }
 
-                    System.out.println("Search for another advisor? :");
-                    search = scanner.nextInt();
-                    if (search == 0) {
-                        advisors = false; //Exit function
-                    }
+                    System.out.println("Search for another advisor? Enter 0 for no: ");
+                    input = scanner.nextInt();
+                    displaying_advisors = (input != 0);
                 }
-            } else if (input == 5) {
+            } else if (input == 7) {
                 System.out.print("Thanks for using this app. Bye-bye.");
-                work = false;
+                exit = true;
             }
         }
     }
 
-    private static Advisor searchAdvisor(Scanner scanner, Advisor[] heads) {
+
+    private static Advisor searchAdvisor(Scanner scanner, ArrayList<Advisor> heads) {
         String acad_ID;
         System.out.println("Enter the ID for the Advisor:");
         acad_ID = scanner.next();
@@ -563,25 +444,341 @@ public class Advisor_Tester {
         for (Advisor n : heads) {
             if (n.getID().equals(acad_ID)) {
                 a = n;
+                break;
             }
         }
 
         return a;
     }
 
-    private static Student searchStudent(Scanner scanner, Student[] students) {
+    private static Advisee searchStudent(Scanner scanner, ArrayList<Advisee> students) {
         String acad_ID;
         System.out.println("Enter the ID for the Student:");
         acad_ID = scanner.next();
-        Student s = null;
+        Advisee s = null;
 
         //We now loop through the list of Advisors,Heads;
-        for (int i = 0; i <= students.length; i++) {
-            if (students[i].getID() == acad_ID) {
-                s = students[i];
+        for (Advisee curr : students) {
+            if (curr.getID().equals(acad_ID)) {
+                s = curr;
+                break;
             }
         }
 
         return s;
     }
 }
+/*
+Welcome to the Advisor Data System. You enter in an advisor info,we will do the work to manage the system.
+Choose a valid option from the following values
+1.Add an Advisor to the System.
+2.Edit an advisor in the advisor array.
+3.Add A student to an advisor.
+4.Delete an advisor in the array.
+5.Display an advisor’s basic information and the advisees in the array.
+6.Exit the application.
+1
+You will now add an advisor to the array of advisors
+Enter Advisor's first name:
+Michael
+Enter Advisor's middle name:
+R
+Enter Advisor's last name:
+Yautaro
+Enter Advisor's ID:
+mry2093
+Enter Advisor's Phone Number:
+484938493
+Enter Advisor's House Num:
+25
+Enter Advisor's Street:
+YearsleyMills
+Enter Advisor's City:
+Media
+Enter Advisor's State:
+PA
+Enter Advisor's Zip:
+19380
+Enter Advisor's Title:
+Professor
+Enter Advisor's Annual Salary:
+2500.50
+Enter Advisor's Hiring Month:
+2
+Enter Advisor's Hiring Day:
+20
+Enter Advisor's Hiring Year:
+2006
+Advisor has been successfully added!Want to add another Advisor:
+1
+You will now add an advisor to the array of advisors
+Enter Advisor's first name:
+Ben
+Enter Advisor's middle name:
+J
+Enter Advisor's last name:
+Stevens
+Enter Advisor's ID:
+bjs1963
+Enter Advisor's Phone Number:
+484938494
+Enter Advisor's House Num:
+146
+Enter Advisor's Street:
+JeremyLane
+Enter Advisor's City:
+Reading
+Enter Advisor's State:
+PA
+Enter Advisor's Zip:
+19380
+Enter Advisor's Title:
+Assistant
+Enter Advisor's Annual Salary:
+1950.60
+Enter Advisor's Hiring Month:
+9
+Enter Advisor's Hiring Day:
+10
+Enter Advisor's Hiring Year:
+1997
+Advisor has been successfully added!Want to add another Advisor:
+0
+Choose a valid option from the following values
+1.Add an Advisor to the System.
+2.Edit an advisor in the advisor array.
+3.Add A student to an advisor.
+4.Delete an advisor in the array.
+5.Display an advisor’s basic information and the advisees in the array.
+6.Exit the application.
+3
+Enter the ID for the Advisor:
+bjs1963
+Assistant BenJStevens
+bjs1963
+bjs1963@psu.edu
+146 JeremyLane
+Reading, PA
+19380
+Advisees
+Enter Student's first name:
+Aravind
+Enter Student's middle name:
+H
+Enter Student's last name:
+Alwar
+Enter Student's ID:
+aha5495
+Enter Student's Phone Number:
+48488675
+Enter Student's Street Num:
+346
+Enter Student's Street Name:
+GalwayDrive
+Enter Student's City:
+WC
+Enter Student's State:
+PA
+Enter Student's Zip:
+19380
+Enter Student's Major:
+CompSci
+Enter Student's Admission Month:
+5
+Enter Student's Admission Day:
+14
+Enter Student's Admission Year:
+2022
+Type in the course name:
+CmpSci131
+Credits for the course:
+3
+Add another Course:
+1
+Type in the course name:
+Math141H
+Credits for the course:
+4
+Add another Course:
+1
+Type in the course name:
+Eng30H
+Credits for the course:
+3
+Add another Course:
+0
+Want to add in another Student:
+0
+Search for another advisor? :
+0
+Choose a valid option from the following values
+1.Add an Advisor to the System.
+2.Edit an advisor in the advisor array.
+3.Add A student to an advisor.
+4.Delete an advisor in the array.
+5.Display an advisor’s basic information and the advisees in the array.
+6.Exit the application.
+5
+Enter the ID for the Advisor:
+bjs1963
+Assistant BenJStevens
+bjs1963
+bjs1963@psu.edu
+146 JeremyLane
+Reading, PA
+19380
+Advisees
+Aravind H Alwar
+aha5495
+aha5495@psu.edu
+346 GalwayDrive
+WC, PA
+19380
+Major: CompSci
+Search for another advisor? :
+0
+Choose a valid option from the following values
+1.Add an Advisor to the System.
+2.Edit an advisor in the advisor array.
+3.Add A student to an advisor.
+4.Delete an advisor in the array.
+5.Display an advisor’s basic information and the advisees in the array.
+6.Exit the application.
+--Did not Include a trial with 2 students,but it worked well enough.Printed both students out
+Welcome to the Advisor Data System. You enter in an advisor info,we will do the work to manage the system.
+Choose a valid option from the following values
+1.Add an Advisor to the System.
+2.Edit an advisor in the advisor array.
+3.Add A student to an advisor.
+4.Delete an advisor in the array.
+5.Display an advisor’s basic information and the advisees in the array.
+6.Exit the application.
+3
+Enter the ID for the Advisor:
+mry2093
+Advisor was not found //Correctly printed out not found advisor
+Search for another advisor? :
+0
+Choose a valid option from the following values
+1.Add an Advisor to the System.
+2.Edit an advisor in the advisor array.
+3.Add A student to an advisor.
+4.Delete an advisor in the array.
+5.Display an advisor’s basic information and the advisees in the array.
+6.Exit the application.
+6
+Thanks for using this app. Bye-bye.
+Welcome to the Advisor Data System. You enter in an advisor info,we will do the work to manage the system.
+Choose a valid option from the following values
+1.Add an Advisor to the System.
+2.Edit an advisor in the advisor array.
+3.Add A student to an advisor.
+4.Delete an advisor in the array.
+5.Display an advisor’s basic information and the advisees in the array.
+6.Exit the application.
+1
+You will now add an advisor to the array of advisors
+Enter Advisor's first name:
+Michael
+Enter Advisor's middle name:
+R
+Enter Advisor's last name:
+Yautaro
+Enter Advisor's ID:
+mry2093
+Enter Advisor's Phone Number:
+484885923
+Enter Advisor's House Num:
+25
+Enter Advisor's Street:
+YearsleyMills
+Enter Advisor's City:
+Media
+Enter Advisor's State:
+PA
+Enter Advisor's Zip:
+19380
+Enter Advisor's Title:
+Professor
+Enter Advisor's Annual Salary:
+4500.900
+Enter Advisor's Hiring Month:
+2
+Enter Advisor's Hiring Day:
+20
+Enter Advisor's Hiring Year:
+2006
+Advisor has been successfully added!Want to add another Advisor:
+0
+Choose a valid option from the following values
+1.Add an Advisor to the System.
+2.Edit an advisor in the advisor array.
+3.Add A student to an advisor.
+4.Delete an advisor in the array.
+5.Display an advisor’s basic information and the advisees in the array.
+6.Exit the application.
+1
+You will now add an advisor to the array of advisors
+Enter Advisor's first name:
+Ben
+Enter Advisor's middle name:
+J
+Enter Advisor's last name:
+Stevens
+Enter Advisor's ID:
+bjs1963
+Enter Advisor's Phone Number:
+484889482
+Enter Advisor's House Num:
+146
+Enter Advisor's Street:
+GalwayDrive
+Enter Advisor's City:
+Reading
+Enter Advisor's State:
+PA
+Enter Advisor's Zip:
+19380
+Enter Advisor's Title:
+Assistant
+Enter Advisor's Annual Salary:
+1500.00
+Enter Advisor's Hiring Month:
+9
+Enter Advisor's Hiring Day:
+10
+Enter Advisor's Hiring Year:
+1997
+Advisor has been successfully added!Want to add another Advisor:
+0
+Choose a valid option from the following values
+1.Add an Advisor to the System.
+2.Edit an advisor in the advisor array.
+3.Add A student to an advisor.
+4.Delete an advisor in the array.
+5.Display an advisor’s basic information and the advisees in the array.
+6.Exit the application.
+4
+Enter the ID for the Advisor:
+bjs1963 //Deleted both advisors
+Advisor was deleted.
+Search for another advisor? :
+1
+Enter the ID for the Advisor:
+mry2093 //Deleted both advisors
+Advisor was deleted.
+Search for another advisor? :
+0
+Choose a valid option from the following values
+1.Add an Advisor to the System.
+2.Edit an advisor in the advisor array.
+3.Add A student to an advisor.
+4.Delete an advisor in the array.
+5.Display an advisor’s basic information and the advisees in the array.
+6.Exit the application.
+5
+Enter the ID for the Advisor:
+mry2093
+Advisor was not found
+Search for another advisor? :
+ */

@@ -2,14 +2,14 @@ public abstract class People implements Payable {
     private String name, ID;
     private Email email;
     private Address address;
-    private int phoneNum;
+    private long phoneNum;
 
     public People() {
         name = "";
         ID = "";
         email = null;
         address = null;
-        phoneNum = 0;
+        phoneNum = 0L;
     }
 
     // Copy constructor
@@ -26,7 +26,7 @@ public abstract class People implements Payable {
         this.ID = ID;
     }
 
-    public abstract String Display();
+    public abstract void Display();
 
     public String getName() {
         return name;
@@ -64,11 +64,11 @@ public abstract class People implements Payable {
         this.address = address;
     }
 
-    public int getPhoneNum() {
+    public long getPhoneNum() {
         return phoneNum;
     }
 
-    public void setPhoneNum(int phoneNum) {
+    public void setPhoneNum(long phoneNum) {
         this.phoneNum = phoneNum;
     }
 }

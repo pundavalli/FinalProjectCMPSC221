@@ -2,6 +2,9 @@ public class Address {
     private int house_number, zip_code;
     private String street, town, state;
 
+    public Address() {
+    }
+
     public Address(int house_number, String street, String town, String state, int zip_code) {
         this.house_number = house_number;
         this.street = street;
